@@ -118,7 +118,7 @@ cd <папка_проекта>
 ```bash
 python -m venv venv
 # Windows:
-venv\Scriptsctivate
+venv\Scripts\Activate
 # macOS / Linux:
 source venv/bin/activate
 ```
@@ -153,7 +153,43 @@ set PYTHONPATH=.
 export PYTHONPATH=.
 alembic upgrade head
 ```
+## Создание суперпользователя
 
+В проекте есть утилита `app/create_superuser.py`, которая создаёт первого администратора с логином и паролем по умолчанию:
+
+```python
+username = 'admin'
+password = 'admin123'
+```
+
+### Запуск (из корня проекта):
+
+```bash
+python -m app.create_superuser
+# или
+python app/create_superuser.py
+```
+
+Скрипт:
+
+- проверит, существует ли уже пользователь с username `admin`
+- создаст его как `is_superuser=True`, `is_active=True`, если не существует
+- выведет в консоль логин/пароль
+
+---
+
+## Запуск приложения
+
+Из корня проекта:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+По умолчанию приложение будет доступно по адресу:
+
+- Swagger UI: http://127.0.0.1:8000/docs
+- ReDoc: http://127.0.0.1:8000/redoc
 ---
 
 ## Как авторизоваться и использовать API
